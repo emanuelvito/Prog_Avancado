@@ -54,9 +54,9 @@
       </div>
       
       <nav class="hidden md:flex items-center gap-2">
-        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="#">Início</a>
-        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="#">Consulta de Ramais</a>
-        <a aria-current="page" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-on-primary shadow-sm" href="#">Painel de TI</a>
+        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="{% url 'index' %}">Início</a>
+        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="{% url 'ramais' %}">Consulta de Ramais</a>
+        <a aria-current="page" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-on-primary shadow-sm" href="{% url 'painel_ti' %}">Painel de TI</a>
       </nav>
 
       <div class="flex items-center gap-4">
@@ -86,40 +86,33 @@
             <span class="material-symbols-outlined text-[18px]">add_box</span>
             <span>Novo Patrimônio</span>
           </button>
-          <button class="bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-            <span class="material-symbols-outlined text-[18px]">add_link</span>
-            <span>Alocar IP</span>
-          </button>
-          <button class="bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-            <span class="material-symbols-outlined text-[18px]">tune</span>
-            <span>Gerenciar Setores</span>
-          </button>
         </div>
       </div>
 
-      <!-- Formulário de Cadastro Inline (Desativado para DB) -->
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-5 opacity-90" id="box-cadastro-patrimonio">
+      <!-- Formulário de Cadastro Ativo -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-5" id="box-cadastro-patrimonio">
         <div class="flex items-center justify-between border-b border-outline-variant pb-4">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-primary text-[20px]">devices</span>
-            <h2 class="font-semibold text-primary uppercase text-sm tracking-wider">Cadastro Rápido / Vinculação Tombo &harr; IP (Aguardando DB)</h2>
+            <h2 class="font-semibold text-primary uppercase text-sm tracking-wider">Cadastro Rápido / Vinculação Tombo &harr; IP</h2>
           </div>
         </div>
         
-        <form class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end" id="form-equipamento" onsubmit="event.preventDefault();">
+        <form method="POST" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end" id="form-equipamento">
+          {% csrf_token %}
           <!-- Tombo -->
           <div class="flex flex-col gap-1.5 md:col-span-3">
             <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-tombo">Tombo</label>
             <div class="flex items-center bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
               <span class="text-sm font-medium text-on-surface-variant px-3 bg-surface-container-high py-2.5 border-r border-outline-variant">PAT-</span>
-              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-tombo" maxlength="6" placeholder="1003" type="text" disabled>
+              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-tombo" name="tombo" maxlength="6" placeholder="1003" type="text" required>
             </div>
           </div>
 
           <!-- Nome da Máquina -->
           <div class="flex flex-col gap-1.5 md:col-span-3">
             <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-nome-maquina">Nome da Máquina</label>
-            <input class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none" id="input-nome-maquina" placeholder="TI-DEV-03" type="text" disabled>
+            <input class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none" id="input-nome-maquina" name="nome_maquina" placeholder="TI-DEV-03" type="text" required>
           </div>
 
           <!-- IP Alocado -->
@@ -127,14 +120,14 @@
             <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-ip">IP Alocado</label>
             <div class="flex items-center bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
               <span class="text-sm font-medium text-on-surface-variant px-3 bg-surface-container-high py-2.5 border-r border-outline-variant">192.168.1.</span>
-              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-ip" max="254" min="1" placeholder="20" type="number" disabled>
+              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-ip" name="ip_alocado" max="254" min="1" placeholder="20" type="number" required>
             </div>
           </div>
 
           <!-- Setor -->
           <div class="flex flex-col gap-1.5 md:col-span-2">
             <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="select-setor">Setor</label>
-            <select class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none cursor-pointer" id="select-setor" disabled>
+            <select class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none cursor-pointer" id="select-setor" name="setor" required>
               <option disabled selected value="">Selecionar...</option>
               <option value="Produção">Produção</option>
               <option value="Financeiro">Financeiro</option>
@@ -145,9 +138,9 @@
             </select>
           </div>
 
-          <!-- Salvar (Desativado) -->
+          <!-- Salvar -->
           <div class="md:col-span-1">
-            <button class="w-full bg-slate-300 text-slate-500 py-2.5 rounded-lg text-sm font-medium cursor-not-allowed shadow-none flex items-center justify-center" type="submit" disabled title="Aguardando integração com o banco de dados">
+            <button class="w-full bg-primary text-on-primary hover:bg-primary/90 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-all flex items-center justify-center cursor-pointer" type="submit">
               Salvar
             </button>
           </div>
@@ -168,6 +161,8 @@
             <option value="Financeiro">Financeiro</option>
             <option value="Engenharia">Engenharia</option>
             <option value="TI / Suporte">TI / Suporte</option>
+            <option value="Recursos Humanos">Recursos Humanos</option>
+            <option value="Diretoria">Diretoria</option>
           </select>
           <button class="bg-surface-container hover:bg-surface-container-high border border-outline-variant px-3.5 py-2 rounded-lg text-sm font-medium text-on-surface transition-colors" onclick="resetFiltros()">
             Resetar
@@ -182,7 +177,7 @@
             <span class="material-symbols-outlined text-primary text-[18px]">table_chart</span>
             <h3 class="font-semibold text-primary text-sm uppercase tracking-wider">Inventário Patrimonial de Rede</h3>
           </div>
-          <span class="text-xs font-mono font-medium text-on-surface-variant px-2.5 py-1 bg-surface-container-lowest rounded-md border border-outline-variant" id="contador-linhas">TOTAL: 2</span>
+          <span class="text-xs font-mono font-medium text-on-surface-variant px-2.5 py-1 bg-surface-container-lowest rounded-md border border-outline-variant" id="contador-linhas">TOTAL: {{ equipamentos|length }}</span>
         </div>
 
         <div class="w-full overflow-x-auto">
@@ -197,38 +192,28 @@
               </tr>
             </thead>
             <tbody class="divide-y divide-outline-variant text-sm text-on-surface" id="inventario-body">
+              {% for eq in equipamentos %}
               <tr class="hover:bg-surface-container/50 transition-colors">
                 <td class="py-4 px-6">
-                  <span class="font-mono font-semibold text-primary bg-surface-container px-2.5 py-1 rounded-md border border-outline-variant text-xs">PAT-1001</span>
+                  <span class="font-mono font-semibold text-primary bg-surface-container px-2.5 py-1 rounded-md border border-outline-variant text-xs">PAT-{{ eq.tombo }}</span>
                 </td>
-                <td class="py-4 px-6 font-mono text-on-surface">CAD-PROD-01</td>
+                <td class="py-4 px-6 font-mono text-on-surface">{{ eq.nome_maquina }}</td>
                 <td class="py-4 px-6">
-                  <span class="font-mono text-xs font-medium text-on-secondary-container bg-secondary-container px-2.5 py-1 rounded-md">192.168.1.10</span>
+                  <span class="font-mono text-xs font-medium text-on-secondary-container bg-secondary-container px-2.5 py-1 rounded-md">192.168.1.{{ eq.ip_alocado }}</span>
                 </td>
-                <td class="py-4 px-6">Produção</td>
+                <td class="py-4 px-6">{{ eq.setor }}</td>
                 <td class="py-4 px-6 text-right">
                   <div class="flex items-center justify-end gap-2">
-                    <button class="bg-slate-100 text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed" disabled title="Desativado (Aguardando DB)">Editar</button>
-                    <button class="bg-slate-100 text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed" disabled title="Desativado (Aguardando DB)">Excluir</button>
+                    <a href="{% url 'editar_patrimonio' eq.id %}" class="bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Editar</a>
+                   <a href="{% url 'excluir_patrimonio' eq.id %}" class="bg-red-50 hover:bg-red-100 text-error border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
                   </div>
                 </td>
               </tr>
-              <tr class="hover:bg-surface-container/50 transition-colors">
-                <td class="py-4 px-6">
-                  <span class="font-mono font-semibold text-primary bg-surface-container px-2.5 py-1 rounded-md border border-outline-variant text-xs">PAT-1002</span>
-                </td>
-                <td class="py-4 px-6 font-mono text-on-surface">ADM-FIN-02</td>
-                <td class="py-4 px-6">
-                  <span class="font-mono text-xs font-medium text-on-secondary-container bg-secondary-container px-2.5 py-1 rounded-md">192.168.1.15</span>
-                </td>
-                <td class="py-4 px-6">Financeiro</td>
-                <td class="py-4 px-6 text-right">
-                  <div class="flex items-center justify-end gap-2">
-                    <button class="bg-slate-100 text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed" disabled title="Desativado (Aguardando DB)">Editar</button>
-                    <button class="bg-slate-100 text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium cursor-not-allowed" disabled title="Desativado (Aguardando DB)">Excluir</button>
-                  </div>
-                </td>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="py-6 text-center text-on-surface-variant text-sm">Nenhum equipamento cadastrado no banco de dados.</td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -237,7 +222,7 @@
     </div>
   </main>
 
-  <!-- Script de Controle (Apenas Filtros Ativos) -->
+  <!-- Script de Controle e Filtros -->
   <script>
     function atualizarContador() {
       const tbody = document.getElementById('inventario-body');
@@ -252,6 +237,7 @@
       const linhas = tbody.getElementsByTagName('tr');
 
       for (let linha of linhas) {
+        if (linha.cells.length < 5) continue; // Ignora linha de "vazio"
         const tombo = linha.children[0]?.innerText.toLowerCase() || '';
         const maquina = linha.children[1]?.innerText.toLowerCase() || '';
         const ip = linha.children[2]?.innerText.toLowerCase() || '';

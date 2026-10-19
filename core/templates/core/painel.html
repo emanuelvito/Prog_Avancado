@@ -3,159 +3,291 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Painel de Controle de Inventário - TI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface": "#f8fafc",
-            "surface-container": "#f1f5f9",
-            "surface-container-high": "#e2e8f0",
-            "surface-container-highest": "#cbd5e1",
-            "surface-container-lowest": "#ffffff",
-            "primary": "#0f172a",
-            "on-primary": "#ffffff",
-            "primary-container": "#1e293b",
-            "on-primary-container": "#e2e8f0",
-            "secondary": "#475569",
-            "secondary-container": "#e0f2fe",
-            "on-secondary-container": "#0369a1",
-            "outline": "#94a3b8",
-            "outline-variant": "#cbd5e1",
-            "error": "#ef4444",
-            "on-error": "#ffffff",
-            "on-surface": "#0f172a",
-            "on-surface-variant": "#475569"
-          },
-          fontFamily: {
-            "body": ["Inter", "sans-serif"],
-            "mono": ["JetBrains Mono", "monospace"]
-          }
-        }
-      }
+  <title>Painel de Controle de Inventário TI</title>
+  <style>
+    /* Estilos de Baixa Resolução / Wireframe Minimalista */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-  </script>
-</head>
-<body class="bg-surface font-body text-on-surface antialiased min-h-screen flex flex-col">
-  
-  <!-- Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
-    <div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary shadow-sm">
-          <span class="material-symbols-outlined text-[20px]">dns</span>
-        </div>
-        <span class="font-bold text-lg tracking-tight text-primary">TI & Patrimônio</span>
-      </div>
-      
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="{% url 'index' %}">Início</a>
-        <a class="px-4 py-2 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" href="{% url 'ramais' %}">Consulta de Ramais</a>
-        <a aria-current="page" class="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-on-primary shadow-sm" href="{% url 'painel_ti' %}">Painel de TI</a>
-      </nav>
 
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant">
-          <span class="text-xs font-mono text-on-surface-variant">admin_ti</span>
-          <a class="text-xs font-medium text-primary hover:underline" href="#">Sair</a>
-        </div>
-        <div class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-semibold text-sm">
-          A
+    body {
+      font-family: sans-serif;
+      background-color: #f5f5f5;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .wireframe-container {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Cabeçalho Wireframe */
+    .card-header {
+      border: 2px dashed #333;
+      background-color: #ffffff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info {
+      font-size: 12px;
+      border: 1px solid #999;
+      padding: 4px 8px;
+      background-color: #eee;
+    }
+
+    /* Blocos/Cartões do Painel */
+    .card-bloco {
+      border: 2px dashed #333;
+      background-color: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 1px dashed #999;
+      padding-bottom: 8px;
+    }
+
+    /* Formulário de Cadastro Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      align-items: end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    input, select {
+      padding: 8px;
+      border: 1px solid #999;
+      background-color: #fafafa;
+      font-size: 13px;
+      width: 100%;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .input-prefix {
+      background-color: #e0e0e0;
+      border: 1px solid #999;
+      border-right: none;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* Botões */
+    button, .btn {
+      padding: 8px 12px;
+      border: 1px solid #999;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      color: #000;
+      display: inline-block;
+    }
+
+    button:hover, .btn:hover {
+      background-color: #d0d0d0;
+    }
+
+    .btn-danger {
+      background-color: #f5d0d0;
+      border-color: #cc0000;
+      color: #990000;
+    }
+
+    .btn-danger:hover {
+      background-color: #e8b0b0;
+    }
+
+    /* Filtros e Busca */
+    .filtros-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .busca-box {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    /* Tabela Wireframe */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+    }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 10px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background-color: #eee;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .tag-code {
+      font-family: monospace;
+      background-color: #eee;
+      border: 1px solid #999;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wireframe-container">
+
+    <!-- Header Navigation -->
+    <div class="card-header">
+      <div>
+        <strong>TI & Patrimônio</strong> - Painel Administrativo
+      </div>
+      <div class="header-right">
+        <!-- Botão para voltar à página inicial -->
+        <a href="{% url 'index' %}" class="btn">← Início</a>
+        
+        <div class="user-info">
+         <a href="{% url 'login_ti' %}" style="color: #000;">Sair</a>
         </div>
       </div>
     </div>
-  </header>
 
-  <!-- Main Content -->
-  <main class="w-full pt-24 pb-12 flex-1">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col gap-6">
-
-      <!-- Barra de Ações Destaque -->
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <!-- Barra de Título -->
+    <div class="card-bloco">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
-          <h1 class="text-xl font-bold text-primary">Painel de Controle de Inventário</h1>
-          <p class="text-sm text-on-surface-variant">Gerencie ativos de hardware, alocações de IP e setores da empresa.</p>
+          <h2>Painel de Controle de Inventário</h2>
+          <p style="font-size: 12px; color: #555;">Gerencie ativos de hardware, alocações de IP e setores da empresa.</p>
         </div>
-        <div class="flex flex-wrap items-center gap-3">
-          <button class="bg-primary text-on-primary px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-all flex items-center gap-2 shadow-sm" id="btn-toggle-novo">
-            <span class="material-symbols-outlined text-[18px]">add_box</span>
-            <span>Novo Patrimônio</span>
-          </button>
-        </div>
+        <!-- Botão que exibe/oculta o formulário de cadastro -->
+        <button type="button" id="btn-toggle-novo" onclick="toggleFormularioCadastro()">+ Novo Patrimônio</button>
+      </div>
+    </div>
+
+    <!-- Formulário de Cadastro Ativo (Oculto por padrão via display: none) -->
+    <div class="card-bloco" id="box-cadastro-patrimonio" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center;" class="card-title">
+        <span>CADASTRO RÁPIDO / VINCULAÇÃO TOMBO &harr; IP</span>
+        <button type="button" onclick="toggleFormularioCadastro()" style="padding: 2px 8px; font-size: 11px;">Cancelar / Fechar</button>
       </div>
 
-      <!-- Formulário de Cadastro Ativo -->
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm flex flex-col gap-5" id="box-cadastro-patrimonio">
-        <div class="flex items-center justify-between border-b border-outline-variant pb-4">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[20px]">devices</span>
-            <h2 class="font-semibold text-primary uppercase text-sm tracking-wider">Cadastro Rápido / Vinculação Tombo &harr; IP</h2>
-          </div>
-        </div>
+      <form method="POST" class="form-grid" id="form-equipamento">
+        {% csrf_token %}
         
-        <form method="POST" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end" id="form-equipamento">
-          {% csrf_token %}
-          <!-- Tombo -->
-          <div class="flex flex-col gap-1.5 md:col-span-3">
-            <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-tombo">Tombo</label>
-            <div class="flex items-center bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
-              <span class="text-sm font-medium text-on-surface-variant px-3 bg-surface-container-high py-2.5 border-r border-outline-variant">PAT-</span>
-              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-tombo" name="tombo" maxlength="6" placeholder="1003" type="text" required>
-            </div>
+        <!-- Tombo -->
+        <div class="form-group">
+          <label for="input-tombo">Tombo:</label>
+          <div class="input-group">
+            <span class="input-prefix">PAT-</span>
+            <input id="input-tombo" name="tombo" maxlength="6" placeholder="1003" type="text" required>
           </div>
-
-          <!-- Nome da Máquina -->
-          <div class="flex flex-col gap-1.5 md:col-span-3">
-            <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-nome-maquina">Nome da Máquina</label>
-            <input class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none" id="input-nome-maquina" name="nome_maquina" placeholder="TI-DEV-03" type="text" required>
-          </div>
-
-          <!-- IP Alocado -->
-          <div class="flex flex-col gap-1.5 md:col-span-3">
-            <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="input-ip">IP Alocado</label>
-            <div class="flex items-center bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
-              <span class="text-sm font-medium text-on-surface-variant px-3 bg-surface-container-high py-2.5 border-r border-outline-variant">192.168.1.</span>
-              <input class="w-full bg-transparent px-3 py-2.5 text-sm text-on-surface focus:outline-none" id="input-ip" name="ip_alocado" max="254" min="1" placeholder="20" type="number" required>
-            </div>
-          </div>
-
-          <!-- Setor -->
-          <div class="flex flex-col gap-1.5 md:col-span-2">
-            <label class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider" for="select-setor">Setor</label>
-            <select class="w-full bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2.5 text-sm text-on-surface focus:outline-none cursor-pointer" id="select-setor" name="setor" required>
-              <option disabled selected value="">Selecionar...</option>
-              <option value="Produção">Produção</option>
-              <option value="Financeiro">Financeiro</option>
-              <option value="Engenharia">Engenharia</option>
-              <option value="TI / Suporte">TI / Suporte</option>
-              <option value="Recursos Humanos">Recursos Humanos</option>
-              <option value="Diretoria">Diretoria</option>
-            </select>
-          </div>
-
-          <!-- Salvar -->
-          <div class="md:col-span-1">
-            <button class="w-full bg-primary text-on-primary hover:bg-primary/90 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-all flex items-center justify-center cursor-pointer" type="submit">
-              Salvar
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Filtros e Busca -->
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-        <div class="flex items-center gap-3 flex-1 bg-surface-container border border-outline-variant rounded-lg px-3.5 py-2">
-          <span class="material-symbols-outlined text-outline text-[20px]">search</span>
-          <input class="w-full bg-transparent text-sm text-on-surface focus:outline-none placeholder:text-outline" id="filtro-busca" onkeyup="filtrarInventario()" placeholder="Filtrar por Tombo, IP ou Hostname..." type="text">
         </div>
-        <div class="flex items-center gap-3">
-          <span class="text-xs font-semibold text-on-surface-variant uppercase">Setor:</span>
-          <select class="bg-surface-container border border-outline-variant rounded-lg px-3 py-2 text-sm text-on-surface focus:outline-none cursor-pointer" id="filtro-setor" onchange="filtrarInventario()">
+
+        <!-- Nome da Máquina -->
+        <div class="form-group">
+          <label for="input-nome-maquina">Nome da Máquina:</label>
+          <input id="input-nome-maquina" name="nome_maquina" placeholder="TI-DEV-03" type="text" required>
+        </div>
+
+        <!-- IP Alocado -->
+        <div class="form-group">
+          <label for="input-ip">IP Alocado:</label>
+          <div class="input-group">
+            <span class="input-prefix">192.168.1.</span>
+            <input id="input-ip" name="ip_alocado" max="254" min="1" placeholder="20" type="number" required>
+          </div>
+        </div>
+
+        <!-- Setor -->
+        <div class="form-group">
+          <label for="select-setor">Setor:</label>
+          <select id="select-setor" name="setor" required>
+            <option disabled selected value="">Selecionar...</option>
+            <option value="Produção">Produção</option>
+            <option value="Financeiro">Financeiro</option>
+            <option value="Engenharia">Engenharia</option>
+            <option value="TI / Suporte">TI / Suporte</option>
+            <option value="Recursos Humanos">Recursos Humanos</option>
+            <option value="Diretoria">Diretoria</option>
+          </select>
+        </div>
+
+        <!-- Salvar -->
+        <div>
+          <button type="submit" style="width: 100%;">Salvar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filtros e Busca -->
+    <div class="card-bloco">
+      <div class="filtros-bar">
+        <div class="busca-box form-group">
+          <label for="filtro-busca">Buscar:</label>
+          <input id="filtro-busca" onkeyup="filtrarInventario()" placeholder="Filtrar por Tombo, IP ou Hostname..." type="text">
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-setor">Filtrar Setor:</label>
+          <select id="filtro-setor" onchange="filtrarInventario()">
             <option value="TODOS">Todos os Setores</option>
             <option value="Produção">Produção</option>
             <option value="Financeiro">Financeiro</option>
@@ -164,66 +296,76 @@
             <option value="Recursos Humanos">Recursos Humanos</option>
             <option value="Diretoria">Diretoria</option>
           </select>
-          <button class="bg-surface-container hover:bg-surface-container-high border border-outline-variant px-3.5 py-2 rounded-lg text-sm font-medium text-on-surface transition-colors" onclick="resetFiltros()">
-            Resetar
-          </button>
+        </div>
+
+        <div style="align-self: flex-end;">
+          <button type="button" onclick="resetFiltros()">Resetar Filtros</button>
         </div>
       </div>
-
-      <!-- Tabela de Inventário -->
-      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden flex flex-col">
-        <div class="bg-surface-container px-6 py-3.5 border-b border-outline-variant flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-primary text-[18px]">table_chart</span>
-            <h3 class="font-semibold text-primary text-sm uppercase tracking-wider">Inventário Patrimonial de Rede</h3>
-          </div>
-          <span class="text-xs font-mono font-medium text-on-surface-variant px-2.5 py-1 bg-surface-container-lowest rounded-md border border-outline-variant" id="contador-linhas">TOTAL: {{ equipamentos|length }}</span>
-        </div>
-
-        <div class="w-full overflow-x-auto">
-          <table class="w-full text-left border-collapse" id="tabela-inventario">
-            <thead>
-              <tr class="bg-surface-container/50 text-on-surface-variant text-xs font-semibold uppercase tracking-wider border-b border-outline-variant">
-                <th class="py-3.5 px-6">Tombo</th>
-                <th class="py-3.5 px-6">Nome da Máquina</th>
-                <th class="py-3.5 px-6">IP Alocado</th>
-                <th class="py-3.5 px-6">Setor</th>
-                <th class="py-3.5 px-6 text-right">Ações</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-outline-variant text-sm text-on-surface" id="inventario-body">
-              {% for eq in equipamentos %}
-              <tr class="hover:bg-surface-container/50 transition-colors">
-                <td class="py-4 px-6">
-                  <span class="font-mono font-semibold text-primary bg-surface-container px-2.5 py-1 rounded-md border border-outline-variant text-xs">PAT-{{ eq.tombo }}</span>
-                </td>
-                <td class="py-4 px-6 font-mono text-on-surface">{{ eq.nome_maquina }}</td>
-                <td class="py-4 px-6">
-                  <span class="font-mono text-xs font-medium text-on-secondary-container bg-secondary-container px-2.5 py-1 rounded-md">192.168.1.{{ eq.ip_alocado }}</span>
-                </td>
-                <td class="py-4 px-6">{{ eq.setor }}</td>
-                <td class="py-4 px-6 text-right">
-                  <div class="flex items-center justify-end gap-2">
-                    <a href="{% url 'editar_patrimonio' eq.id %}" class="bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Editar</a>
-                   <a href="{% url 'excluir_patrimonio' eq.id %}" class="bg-red-50 hover:bg-red-100 text-error border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-                  </div>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="5" class="py-6 text-center text-on-surface-variant text-sm">Nenhum equipamento cadastrado no banco de dados.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
     </div>
-  </main>
 
-  <!-- Script de Controle e Filtros -->
+    <!-- Tabela de Inventário -->
+    <div class="card-bloco">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="card-title" style="border: none; padding: 0;">
+          Inventário Patrimonial de Rede
+        </div>
+        <span id="contador-linhas" style="font-size: 12px; font-weight: bold;">TOTAL: {{ equipamentos|length }}</span>
+      </div>
+
+      <table id="tabela-inventario">
+        <thead>
+          <tr>
+            <th>Tombo</th>
+            <th>Nome da Máquina</th>
+            <th>IP Alocado</th>
+            <th>Setor</th>
+            <th class="text-right">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="inventario-body">
+          {% for eq in equipamentos %}
+          <tr>
+            <td>
+              <span class="tag-code">PAT-{{ eq.tombo }}</span>
+            </td>
+            <td><strong>{{ eq.nome_maquina }}</strong></td>
+            <td>
+              <span class="tag-code">192.168.1.{{ eq.ip_alocado }}</span>
+            </td>
+            <td>{{ eq.setor }}</td>
+            <td class="text-right">
+              <a href="{% url 'editar_patrimonio' eq.id %}" class="btn">Editar</a>
+              <a href="{% url 'excluir_patrimonio' eq.id %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" style="text-align: center; color: #666; padding: 15px;">Nenhum equipamento cadastrado no banco de dados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Script de Controle, Filtros e Exibição do Formulário -->
   <script>
+    function toggleFormularioCadastro() {
+      const formBox = document.getElementById('box-cadastro-patrimonio');
+      const btnToggle = document.getElementById('btn-toggle-novo');
+
+      if (formBox.style.display === 'none' || formBox.style.display === '') {
+        formBox.style.display = 'flex';
+        btnToggle.innerText = '- Fechar Formulário';
+        formBox.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        formBox.style.display = 'none';
+        btnToggle.innerText = '+ Novo Patrimônio';
+      }
+    }
+
     function atualizarContador() {
       const tbody = document.getElementById('inventario-body');
       const linhas = tbody.querySelectorAll('tr:not([style*="display: none"])');
@@ -237,7 +379,7 @@
       const linhas = tbody.getElementsByTagName('tr');
 
       for (let linha of linhas) {
-        if (linha.cells.length < 5) continue; // Ignora linha de "vazio"
+        if (linha.cells.length < 5) continue;
         const tombo = linha.children[0]?.innerText.toLowerCase() || '';
         const maquina = linha.children[1]?.innerText.toLowerCase() || '';
         const ip = linha.children[2]?.innerText.toLowerCase() || '';
@@ -260,11 +402,6 @@
       document.getElementById('filtro-setor').value = 'TODOS';
       filtrarInventario();
     }
-
-    document.getElementById('btn-toggle-novo').addEventListener('click', function() {
-      const box = document.getElementById('box-cadastro-patrimonio');
-      box.scrollIntoView({ behavior: 'smooth' });
-    });
   </script>
 </body>
 </html>

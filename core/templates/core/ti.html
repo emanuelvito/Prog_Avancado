@@ -4,150 +4,236 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="web_standard" name="shell-type">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#2563eb",
-                        "primary-dark": "#1d4ed8",
-                        surface: "#f8fafc",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container": "#f1f5f9",
-                        "surface-container-high": "#e2e8f0",
-                        "surface-container-low": "#f8fafc",
-                        "on-surface": "#0f172a",
-                        "on-surface-variant": "#475569",
-                        outline: "#cbd5e1",
-                        "outline-variant": "#e2e8f0",
-                        secondary: "#64748b"
-                    },
-                    fontFamily: {
-                        sans: ["Inter", "sans-serif"]
-                    }
-                }
-            }
+    <title>Login TI</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-    </script>
-    <title>Login TI - Gestão Integrada</title>
+
+        body {
+            font-family: sans-serif;
+            background-color: #f5f5f5;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .wireframe-container {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Título Principal acima dos cartões */
+        .titulo-pagina {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        /* Barra de Voltar */
+        .card-topo {
+            border: 2px dashed #333;
+            background-color: #ffffff;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-voltar {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+            font-weight: bold;
+            background-color: #e0e0e0;
+            padding: 5px 10px;
+            border: 1px solid #999;
+        }
+
+        .btn-voltar:hover {
+            background-color: #d0d0d0;
+        }
+
+        .badge-protegido {
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid #333;
+            padding: 2px 6px;
+            background-color: #fff;
+        }
+
+        /* Cartão Principal do Login */
+        .card-login {
+            border: 2px dashed #333;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-login-header {
+            background-color: #f0f0f0;
+            padding: 12px 20px;
+            border-bottom: 2px dashed #333;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Formulário */
+        form {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 8px;
+            border: 1px solid #999;
+            background-color: #e8f0fe;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .password-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #0000ee;
+            text-decoration: underline;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        /* Botão de Submissão */
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #999;
+            background-color: #e0e0e0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #d0d0d0;
+        }
+    </style>
 </head>
 
-<body class="bg-surface text-on-surface antialiased min-h-full flex flex-col justify-between selection:bg-blue-100 selection:text-blue-700">
-    
-    <!-- Header / Navbar -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-outline-variant shadow-xs">
-        <div class="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
-                    <span class="material-symbols-outlined text-xl">hub</span>
-                </div>
-                <div>
-                    <span class="text-xs font-semibold tracking-wider text-blue-600 uppercase">INFO TI</span>
-                    <h2 class="text-sm font-bold text-slate-800 leading-none">Gestão Integrada</h2>
-                </div>
-            </div>
+<body>
 
-            <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/60">
-                <a class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" href="{% url 'index' %}">Início</a>
-                <a class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg transition-all" href="{% url 'ramais' %}">Consulta de Ramais</a>
-                <a aria-current="page" class="px-4 py-2 text-sm font-semibold bg-white text-blue-600 rounded-lg shadow-xs transition-all" href="{% url 'login_ti' %}">Painel de TI</a>
-            </nav>
+    <!-- Content Container -->
+    <main class="wireframe-container">
+        
+        <!-- Título Posicionado no local solicitado -->
+        <h1 class="titulo-pagina">INFO TI - Gestão Integrada</h1>
 
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center border border-slate-200">
-                    <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
-                </div>
-            </div>
+        <!-- Top Bar com Botão Voltar -->
+        <div class="card-topo">
+            <a class="btn-voltar" href="{% url 'index' %}">
+                Voltar ao Início
+            </a>
+            <span class="badge-protegido">
+                Acesso Protegido
+            </span>
         </div>
-    </header>
 
-    <!-- Main Content Container -->
-    <main class="w-full pt-28 pb-16 flex-1 flex flex-col justify-center items-center">
-        <div class="max-w-xl mx-auto px-6 w-full flex flex-col gap-6">
-            
-            <!-- Top Bar with Back Button -->
-            <div class="bg-white rounded-2xl p-4 border border-outline-variant shadow-xs flex items-center justify-between">
-                <a class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-xl transition-all" href="{% url 'index' %}">
-                    <span class="material-symbols-outlined text-base">arrow_back</span>
-                    <span>Voltar ao Início</span>
-                </a>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/60 text-amber-700 text-xs font-bold uppercase">
-                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                    Acesso Protegido
-                </span>
+        <!-- Login Card -->
+        <div class="card-login">
+            <div class="card-login-header">
+                AUTENTICAÇÃO AREA RESTRITA TI
             </div>
 
-            <!-- Login Card -->
-            <div class="bg-white rounded-2xl border border-outline-variant shadow-xs overflow-hidden">
-                <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="material-symbols-outlined text-slate-700">lock</span>
-                        <span class="text-sm font-bold text-slate-900 tracking-wide">AUTENTICAÇÃO DE REDE CORPORATIVA</span>
-                    </div>
+            <!-- Formulário do Django -->
+            <form method="POST" action="">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="username">
+                        Usuário:
+                    </label>
+                    <input id="username" name="username" placeholder="ex: joao.silva" required type="text">
+                    <span class="helper-text">Formato:(Ex: joao.silva)</span>
                 </div>
 
-                <!-- Formulário configurado para enviar dados via POST para o Django -->
-                <form class="p-8 flex flex-col gap-5" method="POST" action="">
-                    {% csrf_token %}
-
-                    <div class="flex flex-col gap-1.5">
-                        <label class="text-xs font-bold text-slate-700 uppercase tracking-wider" for="username">
-                            Usuário:
+                <div class="form-group">
+                    <div class="password-header">
+                        <label for="password">
+                            Senha:
                         </label>
-                        <!-- O atributo name="username" é obrigatório para o Django reconhecer -->
-                        <input class="w-full bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all placeholder:text-slate-400" id="username" name="username" placeholder="ex: admin_ti" required type="text">
-                        <span class="text-[11px] text-slate-400">Formato: samAccountName (Ex: joao.silva)</span>
-                    </div>
-
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center justify-between">
-                            <label class="text-xs font-bold text-slate-700 uppercase tracking-wider" for="password">
-                                Senha:
-                            </label>
-                            <button class="text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors cursor-pointer" id="togglePass" onclick="
-                                const p = document.getElementById('password');
-                                const isPass = p.type === 'password';
-                                p.type = isPass ? 'text' : 'password';
-                                this.innerText = isPass ? 'Ocultar' : 'Mostrar';
-                            " type="button">
-                                Mostrar
-                            </button>
-                        </div>
-                        <!-- O atributo name="password" é obrigatório para o Django reconhecer -->
-                        <input class="w-full bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 transition-all placeholder:text-slate-400" id="password" name="password" placeholder="••••••••" required type="password">
-                    </div>
-
-                    <div class="pt-1">
-                        <label class="flex items-center gap-2.5 cursor-pointer select-none">
-                            <input class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 cursor-pointer" id="rememberDevice" type="checkbox">
-                            <span class="text-xs font-medium text-slate-700">
-                                Lembrar credencial neste terminal da fábrica
-                            </span>
-                        </label>
-                    </div>
-
-                    <div class="pt-2">
-                        <!-- O tipo type="submit" faz com que o clique dispare o envio do formulário -->
-                        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl uppercase tracking-wider shadow-md shadow-blue-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer" type="submit">
-                            <span>Entrar no Painel TI</span>
-                            <span class="material-symbols-outlined text-lg">login</span>
+                        <button class="toggle-btn" id="togglePass" onclick="
+                            const p = document.getElementById('password');
+                            const isPass = p.type === 'password';
+                            p.type = isPass ? 'text' : 'password';
+                            this.innerText = isPass ? 'Ocultar' : 'Mostrar';
+                        " type="button">
+                            Mostrar
                         </button>
                     </div>
-                </form>
-            </div>
+                    <input id="password" name="password" placeholder="••••••••" required type="password">
+                </div>
 
+                <div class="checkbox-group">
+                    <input id="rememberDevice" type="checkbox">
+                    <label for="rememberDevice" style="font-weight: normal; cursor: pointer;">
+                        Lembrar credencial neste terminal da fábrica
+                    </label>
+                </div>
+
+                <div>
+                    <button type="submit">
+                        ENTRAR NO PAINEL TI
+                    </button>
+                </div>
+            </form>
         </div>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full bg-white border-t border-outline-variant py-6 text-center text-xs text-slate-400">
-        Corporate Hub &copy; 2026 - Módulo de Gestão TI.
-    </footer>
 </body>
 
 </html>

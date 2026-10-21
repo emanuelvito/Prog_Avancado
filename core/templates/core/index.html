@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8">
-  <title>Tela Inicial</title>
+  <title>Tela Inicial - INFO TI</title>
   <style>
     /* Reset básico */
     * {
@@ -11,21 +12,102 @@
       padding: 0;
     }
 
-    /* Centraliza o conteúdo perfeitamente no meio da página */
     body {
       font-family: sans-serif;
       background-color: #f5f5f5;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
+    }
+
+    /* Estilos do Menu / Navbar */
+    .navbar {
+      width: 100%;
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .logo {
+      color: #fff;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+      background-color: #555;
+    }
+
+    /* Barra de Usuário / Status */
+    .user-info {
+      color: #ccc;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info span {
+      background-color: #444;
+      padding: 4px 8px;
+      border-radius: 3px;
+    }
+
+    /* Estilos para o conteúdo principal */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    /* Barra de Navegação Interna / Breadcrumb */
+    .breadcrumb {
+      width: 100%;
+      max-width: 700px;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumb a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     h2 {
       margin-bottom: 20px;
       color: #333;
+      border-bottom: 2px solid #333;
+      padding-bottom: 5px;
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
     }
 
     .grid-container {
@@ -35,6 +117,7 @@
       align-items: stretch;
       max-width: 700px;
       width: 100%;
+      margin-bottom: 30px;
     }
 
     .card-componente {
@@ -66,6 +149,12 @@
       margin-bottom: 5px;
     }
 
+    .btn-link {
+      text-decoration: none;
+      display: block;
+      margin-top: auto;
+    }
+
     button {
       width: 100%;
       padding: 10px;
@@ -73,60 +162,166 @@
       font-weight: bold;
       background-color: #e0e0e0;
       border: 1px solid #999;
+    }
+
+    button:hover {
+      background-color: #d0d0d0;
+    }
+
+    button:active {
+      background-color: #bbb;
+    }
+
+    /* Barra de Ações Rápidas */
+    .acoes-rapidas {
+      width: 100%;
+      max-width: 700px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .acoes-rapidas span {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .botoes-grupo {
+      display: flex;
+      gap: 10px;
+    }
+
+    .botoes-grupo button {
+      width: auto;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    /* Rodapé */
+    .footer {
+      width: 100%;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 12px;
       margin-top: auto;
     }
 
-    /* Ajuste para ecrãs pequenos */
+    .footer a {
+      color: #ccc;
+      text-decoration: underline;
+    }
+
+    /* Ajuste para telas pequenas */
     @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .navbar ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
       .grid-container {
         flex-direction: column;
+      }
+
+      .acoes-rapidas {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <h2>INFO TI</h2>
+  <!-- Menu de Navegação / Navbar Completa -->
+  <nav class="navbar">
+    <div class="logo">⚙️ INFO TI </div>
+    <ul>
+      <li><a href="{% url 'index' %}" class="active">Início</a></li>
+      <li><a href="{% url 'ramais' %}">Ramais</a></li>
+      <li><a href="{% url 'login_ti' %}">Painel de TI</a></li>
 
-  <div class="grid-container">
-    
-    <!-- Componente 1: Consulta de Ramais -->
-    <div class="card-componente">
-      <div>
-        <h3>Consulta de Ramais <small>(Público)</small></h3>
-        <p>Catálogo Interno</p>
-        
-        <strong>Especificações:</strong>
-        <ul class="lista-especificacoes">
-          <li>Acesso público imediato</li>
-          <li>Lista atualizada da fábrica</li>
-        </ul>
-      </div>
+    </ul>
+    <div class="user-info">
+      Status: <span>Online</span>
+    </div>
+  </nav>
 
-      <a href="{% url 'ramais' %}" class="btn-link">
-        <button type="button">Acessar Ramais</button>
-      </a>
+  <!-- Conteúdo Principal -->
+  <div class="container">
+
+    <!-- Caminho de Navegação (Breadcrumb) -->
+    <div class="breadcrumb">
+
     </div>
 
-    <!-- Componente 2: Área Restrita TI -->
-    <div class="card-componente">
-      <div>
-        <h3>Área Restrita TI <small>(Restrito)</small></h3>
-        <p>Painel Administrativo</p>
-        
-        <strong>Especificações:</strong>
-        <ul class="lista-especificacoes">
-          <li>Gestão de Patrimónios</li>
-          <li>Controle de IPs</li>
-        </ul>
+    <h2>INFO TI</h2>
+
+    <!-- Grid de Opções -->
+    <div class="grid-container">
+
+      <!-- Componente 1: Consulta de Ramais -->
+      <div class="card-componente">
+        <div>
+          <h3>Consulta de Ramais <small>(Público)</small></h3>
+          <p>Catálogo Interno</p>
+
+          <strong>Especificações:</strong>
+          <ul class="lista-especificacoes">
+            <li>Acesso público imediato</li>
+            <li>Lista atualizada da fábrica</li>
+            <li>Pesquisa por setor</li>
+          </ul>
+        </div>
+
+        <a href="{% url 'ramais' %}" class="btn-link">
+          <button type="button">Acessar Ramais</button>
+        </a>
       </div>
 
-      <a href="{% url 'login_ti' %}" class="btn-link">
-        <button type="button">Login TI</button>
-      </a>
+      <!-- Componente 2: Área Restrita TI -->
+      <div class="card-componente">
+        <div>
+          <h3>Área Restrita TI <small>(Restrito)</small></h3>
+          <p>Painel Administrativo</p>
+
+          <strong>Especificações:</strong>
+          <ul class="lista-especificacoes">
+            <li>Gestão de Patrimónios</li>
+            <li>Controle de IPs</li>
+            <li>Acesso via Senha</li>
+          </ul>
+        </div>
+
+        <a href="{% url 'login_ti' %}" class="btn-link">
+          <button type="button">Login TI</button>
+        </a>
+      </div>
+
     </div>
+
+
 
   </div>
 
+  <!-- Rodapé da Aplicação -->
+  <footer class="footer">
+    <p>INFO TI © 2026 - Sistema Interno de Suporte e Consulta | <a href="#topo">Voltar ao topo</a></p>
+  </footer>
+
 </body>
+
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Painel de Controle de Inventário TI</title>
+  <title>Painel de Controle de Inventário TI | INFO TI</title>
   <style>
     /* Estilos de Baixa Resolução / Wireframe Minimalista */
     * {
@@ -13,19 +14,69 @@
     }
 
     body {
-      font-family: sans-serif;
-      background-color: #f5f5f5;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #e9e9e9;
       color: #000;
       display: flex;
       flex-direction: column;
-      align-items: center;
       min-height: 100vh;
-      padding: 20px;
+    }
+
+    /* Menu Superior / Navbar Wireframe */
+    .navbar {
+      background-color: #222222;
+      color: #ffffff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #000;
+    }
+
+    .navbar .logo {
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+      gap: 5px;
+    }
+
+    .navbar a {
+      color: #cccccc;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 6px 12px;
+      border: 1px solid transparent;
+    }
+
+    .navbar a:hover,
+    .navbar a.active {
+      color: #ffffff;
+      background-color: #444444;
+      border: 1px solid #666666;
+    }
+
+    .navbar .user-info {
+      font-size: 12px;
+      color: #ccc;
+    }
+
+    .navbar .user-info span {
+      color: #444;
+      font-weight: bold;
     }
 
     .wireframe-container {
       width: 100%;
       max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 10px;
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 15px;
@@ -47,13 +98,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-
-    .user-info {
-      font-size: 12px;
-      border: 1px solid #999;
-      padding: 4px 8px;
-      background-color: #eee;
     }
 
     /* Blocos/Cartões do Painel */
@@ -94,7 +138,8 @@
       text-transform: uppercase;
     }
 
-    input, select {
+    input,
+    select {
       padding: 8px;
       border: 1px solid #999;
       background-color: #fafafa;
@@ -117,7 +162,8 @@
     }
 
     /* Botões */
-    button, .btn {
+    button,
+    .btn {
       padding: 8px 12px;
       border: 1px solid #999;
       background-color: #e0e0e0;
@@ -128,10 +174,18 @@
       text-decoration: none;
       color: #000;
       display: inline-block;
+      box-shadow: 1px 1px 0px #000;
     }
 
-    button:hover, .btn:hover {
+    button:hover,
+    .btn:hover {
       background-color: #d0d0d0;
+    }
+
+    button:active,
+    .btn:active {
+      box-shadow: none;
+      transform: translate(1px, 1px);
     }
 
     .btn-danger {
@@ -165,7 +219,8 @@
       margin-top: 5px;
     }
 
-    th, td {
+    th,
+    td {
       border: 1px solid #999;
       padding: 10px;
       text-align: left;
@@ -189,24 +244,50 @@
     .text-right {
       text-align: right;
     }
+
+    /* Rodapé Fixo */
+    .footer {
+      background-color: #222222;
+      color: #ffffff;
+      border-top: 2px solid #000;
+      padding: 12px;
+      text-align: center;
+      font-size: 12px;
+      margin-top: auto;
+    }
+
+    .footer a {
+      color: #8899ff;
+      text-decoration: underline;
+    }
   </style>
 </head>
-<body>
+
+<body id="topo">
+
+  <!-- Menu Superior / Navbar Padrão -->
+  <nav class="navbar">
+    <div class="logo">⚙️ INFO TI</div>
+    <ul>
+      <li><a href="{% url 'index' %}">Início</a></li>
+      <li><a href="{% url 'ramais' %}">Ramais</a></li>
+      <li><a href="{% url 'login_ti' %}" class="active">Painel de TI</a></li>
+    </ul>
+    <div class="user-info">
+      Status: <span>Online</span>
+    </div>
+  </nav>
 
   <div class="wireframe-container">
 
-    <!-- Header Navigation -->
+    <!-- Header Navigation Alternativo / Voltar -->
     <div class="card-header">
       <div>
         <strong>TI & Patrimônio</strong> - Painel Administrativo
       </div>
       <div class="header-right">
-        <!-- Botão para voltar à página inicial -->
         <a href="{% url 'index' %}" class="btn">← Início</a>
-        
-        <div class="user-info">
-         <a href="{% url 'login_ti' %}" style="color: #000;">Sair</a>
-        </div>
+        <a href="{% url 'login_ti' %}" class="btn" style="background-color: #fff;">Sair</a>
       </div>
     </div>
 
@@ -215,7 +296,8 @@
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
           <h2>Painel de Controle de Inventário</h2>
-          <p style="font-size: 12px; color: #555;">Gerencie ativos de hardware, alocações de IP e setores da empresa.</p>
+          <p style="font-size: 12px; color: #555;">Gerencie ativos de hardware, alocações de IP e setores da empresa.
+          </p>
         </div>
         <!-- Botão que exibe/oculta o formulário de cadastro -->
         <button type="button" id="btn-toggle-novo" onclick="toggleFormularioCadastro()">+ Novo Patrimônio</button>
@@ -226,12 +308,13 @@
     <div class="card-bloco" id="box-cadastro-patrimonio" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center;" class="card-title">
         <span>CADASTRO RÁPIDO / VINCULAÇÃO TOMBO &harr; IP</span>
-        <button type="button" onclick="toggleFormularioCadastro()" style="padding: 2px 8px; font-size: 11px;">Cancelar / Fechar</button>
+        <button type="button" onclick="toggleFormularioCadastro()" style="padding: 2px 8px; font-size: 11px;">Cancelar /
+          Fechar</button>
       </div>
 
       <form method="POST" class="form-grid" id="form-equipamento">
         {% csrf_token %}
-        
+
         <!-- Tombo -->
         <div class="form-group">
           <label for="input-tombo">Tombo:</label>
@@ -282,7 +365,8 @@
       <div class="filtros-bar">
         <div class="busca-box form-group">
           <label for="filtro-busca">Buscar:</label>
-          <input id="filtro-busca" onkeyup="filtrarInventario()" placeholder="Filtrar por Tombo, IP ou Hostname..." type="text">
+          <input id="filtro-busca" onkeyup="filtrarInventario()" placeholder="Filtrar por Tombo, IP ou Hostname..."
+            type="text">
         </div>
 
         <div class="form-group">
@@ -336,12 +420,14 @@
             <td>{{ eq.setor }}</td>
             <td class="text-right">
               <a href="{% url 'editar_patrimonio' eq.id %}" class="btn">Editar</a>
-              <a href="{% url 'excluir_patrimonio' eq.id %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
+              <a href="{% url 'excluir_patrimonio' eq.id %}" class="btn btn-danger"
+                onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
             </td>
           </tr>
           {% empty %}
           <tr>
-            <td colspan="5" style="text-align: center; color: #666; padding: 15px;">Nenhum equipamento cadastrado no banco de dados.</td>
+            <td colspan="5" style="text-align: center; color: #666; padding: 15px;">Nenhum equipamento cadastrado no
+              banco de dados.</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -349,6 +435,11 @@
     </div>
 
   </div>
+
+  <!-- Rodapé Padrão -->
+  <footer class="footer">
+    INFO TI © 2026 - Sistema Interno de Suporte e Consulta | <a href="#topo">Voltar ao topo</a>
+  </footer>
 
   <!-- Script de Controle, Filtros e Exibição do Formulário -->
   <script>
@@ -404,4 +495,5 @@
     }
   </script>
 </body>
+
 </html>

@@ -19,13 +19,14 @@
             flex-direction: column;
             min-height: 100vh;
             color: #000;
+            font-size: 16px; /* Tamanho base da fonte aumentado */
         }
 
         /* Menu Superior / Navbar Wireframe */
         .navbar {
             background-color: #222222;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -34,23 +35,24 @@
 
         .navbar .logo {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 20px;
             letter-spacing: 0.5px;
         }
 
         .navbar ul {
             display: flex;
             list-style: none;
-            gap: 5px;
+            gap: 10px;
         }
 
         .navbar a {
             color: #cccccc;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border: 1px solid transparent;
+            border-radius: 4px;
         }
 
         .navbar a:hover,
@@ -61,57 +63,61 @@
         }
 
         .navbar .user-info {
-            font-size: 12px;
+            font-size: 14px;
             color: #ccc;
         }
 
         .navbar .user-info span {
-            color: #444;
+            color: #fff;
             font-weight: bold;
         }
 
         .wireframe-container {
             width: 100%;
-            max-width: 900px;
-            margin: 25px auto;
-            padding: 0 10px;
+            max-width: 950px; /* Largura máxima ligeiramente expandida */
+            margin: 30px auto;
+            padding: 0 15px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         /* Cabeçalho da Página */
         .card-topo {
             border: 2px dashed #333;
             background-color: #ffffff;
-            padding: 15px 20px;
+            padding: 25px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .status-badge {
-            border: 1px solid #333;
-            padding: 4px 8px;
-            font-size: 12px;
-            background-color: #e0e0e0;
+        .card-topo h2 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .card-topo p {
+            font-size: 15px !important;
+            color: #555;
         }
 
         /* Bloco Principal de Conteúdo */
         .card-principal {
             border: 2px dashed #333;
             background-color: #ffffff;
-            padding: 20px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         /* Filtros e Busca */
         .filtros-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: space-between;
             align-items: flex-end;
             flex-wrap: wrap;
@@ -119,31 +125,33 @@
 
         .campo-busca {
             flex: 1;
-            min-width: 250px;
+            min-width: 280px;
         }
 
         .campo-busca label,
         .filtros-setor label {
             display: block;
             font-weight: bold;
-            font-size: 12px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
         }
 
         .busca-input-group {
             display: flex;
-            gap: 5px;
+            gap: 8px;
         }
 
         .busca-input-group input {
             flex: 1;
-            padding: 8px;
+            padding: 12px;
             border: 1px solid #999;
+            font-size: 15px;
         }
 
         .botoes-setor {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -153,11 +161,11 @@
 
         button,
         .btn {
-            padding: 8px 12px;
+            padding: 10px 16px;
             border: 1px solid #999;
             background-color: #e0e0e0;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: bold;
             box-shadow: 1px 1px 0px #000;
         }
@@ -182,26 +190,28 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         th,
         td {
             border: 1px solid #999;
-            padding: 10px;
+            padding: 14px;
             text-align: left;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         th {
             background-color: #eee;
+            font-size: 16px;
         }
 
         .setor-tag {
             border: 1px solid #666;
-            padding: 2px 6px;
-            font-size: 12px;
+            padding: 4px 8px;
+            font-size: 13px;
             background-color: #fafafa;
+            font-weight: bold;
         }
 
         .nav-voltar {
@@ -213,14 +223,19 @@
             text-decoration: none;
         }
 
+        .nav-voltar button {
+            padding: 10px 16px;
+            font-size: 15px;
+        }
+
         /* Rodapé Fixo */
         .footer {
             background-color: #222222;
             color: #ffffff;
             border-top: 2px solid #000;
-            padding: 12px;
+            padding: 16px;
             text-align: center;
-            font-size: 12px;
+            font-size: 14px;
             margin-top: auto;
         }
 
@@ -259,7 +274,7 @@
         <div class="card-topo">
             <div>
                 <h2>CONSULTA DE RAMAIS</h2>
-                <p style="font-size: 13px; color: #555;">Catálogo Telefónico Corporativo Interno</p>
+                <p>Catálogo Telefónico Corporativo Interno</p>
             </div>
         </div>
 

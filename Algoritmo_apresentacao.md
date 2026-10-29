@@ -6,4 +6,4 @@
 
 ![Slide 4](Algoritmo_Apre/4.png)
 
-[![Slide 5 com Vídeo](Algoritmo_Apre/5.png)](https://www.youtube.com/watch?v=[CODIGO_DO_TEU_VIDEO](https://youtu.be/r4J8UldxRVc))
+[![Slide 5 com Vídeo](Algoritmo_Apre/5.png)](https://www.youtube.com/watch?v=[CODIGO_DO_TEU_VIDEO](https://www.youtube.com/watch?v=r4J8UldxRVc))

@@ -20,10 +20,9 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      font-size: 16px; /* Tamanho base da fonte aumentado */
+      font-size: 16px;
     }
 
-    /* Menu Superior / Navbar Wireframe */
     .navbar {
       background-color: #222222;
       color: #ffffff;
@@ -75,7 +74,7 @@
 
     .wireframe-container {
       width: 100%;
-      max-width: 1100px; /* Largura expandida para melhor visualização da tabela e grids */
+      max-width: 1100px;
       margin: 35px auto;
       padding: 0 15px;
       flex: 1;
@@ -84,7 +83,6 @@
       gap: 20px;
     }
 
-    /* Cabeçalho Wireframe */
     .card-header {
       border: 2px dashed #333;
       background-color: #ffffff;
@@ -102,7 +100,6 @@
       gap: 10px;
     }
 
-    /* Blocos/Cartões do Painel */
     .card-bloco {
       border: 2px dashed #333;
       background-color: #ffffff;
@@ -120,7 +117,6 @@
       padding-bottom: 10px;
     }
 
-    /* Formulário de Cadastro Grid */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -163,7 +159,6 @@
       font-weight: bold;
     }
 
-    /* Botões */
     button,
     .btn {
       padding: 12px 18px;
@@ -200,7 +195,15 @@
       background-color: #e8b0b0;
     }
 
-    /* Filtros e Busca */
+    .alert-error {
+      background-color: #f5d0d0;
+      border: 2px solid #cc0000;
+      color: #990000;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
     .filtros-bar {
       display: flex;
       justify-content: space-between;
@@ -214,7 +217,6 @@
       min-width: 280px;
     }
 
-    /* Tabela Wireframe */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -248,7 +250,6 @@
       text-align: right;
     }
 
-    /* Rodapé Fixo */
     .footer {
       background-color: #222222;
       color: #ffffff;
@@ -289,7 +290,7 @@
         <strong style="font-size: 16px;">TI & Patrimônio</strong><span style="font-size: 15px; color: #555; margin-left: 8px;">Painel Administrativo</span>
       </div>
       <div class="header-right">
-        <a href="{% url 'index' %}" class="btn">← Início</a>
+        <a href="{% url 'index' %}" class="btn">Início</a>
         <a href="{% url 'login_ti' %}" class="btn" style="background-color: #fff;">Sair</a>
       </div>
     </div>
@@ -306,12 +307,19 @@
       </div>
     </div>
 
-    <!-- Formulário de Cadastro Ativo (Oculto por padrão via display: none) -->
+    <!-- Formulário de Cadastro Ativo (Controlado dinamicamente) -->
     <div class="card-bloco" id="box-cadastro-patrimonio" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center;" class="card-title">
         <span>CADASTRO RÁPIDO / VINCULAÇÃO TOMBO &harr; IP</span>
         <button type="button" onclick="toggleFormularioCadastro()" style="padding: 6px 12px; font-size: 13px;">Cancelar / Fechar</button>
       </div>
+
+      <!-- Alerta de Erro caso ocorra duplicidade -->
+      {% if erro %}
+        <div class="alert-error">
+          ⚠️ [ERRO]: {{ erro }}
+        </div>
+      {% endif %}
 
       <form method="POST" class="form-grid" id="form-equipamento">
         {% csrf_token %}
@@ -454,6 +462,19 @@
         btnToggle.innerText = '+ Novo Patrimônio';
       }
     }
+
+    // Se houver um erro vindo do backend, abre o formulário automaticamente sem quebrar o JS
+    window.addEventListener('DOMContentLoaded', () => {
+      const temErro = "{{ erro|default:'' }}";
+      if (temErro !== "") {
+        const formBox = document.getElementById('box-cadastro-patrimonio');
+        const btnToggle = document.getElementById('btn-toggle-novo');
+        if (formBox && btnToggle) {
+          formBox.style.display = 'flex';
+          btnToggle.innerText = '- Fechar Formulário';
+        }
+      }
+    });
 
     function atualizarContador() {
       const tbody = document.getElementById('inventario-body');

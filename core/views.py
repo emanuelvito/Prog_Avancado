@@ -1,72 +1,84 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.forms import AuthenticationForm
+from django.db import IntegrityError
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Equipamento
+
 
 def index_view(request):
     return render(request, 'core/index.html')
 
+
 def consulta_ramais_view(request):
-    return render(request, 'core/ramais.html')  
+    return render(request, 'core/ramais.html')
+
 
 def autenticacao_ti(request):
-    return render(request, 'core/ti.html')  
+    return render(request, 'core/ti.html')
 
+# Simplifica a validação do form usando 'data=request.POST or None'
 def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('painel_ti') 
-    else:
-        form = AuthenticationForm()
+    form = AuthenticationForm(request, data=request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        login(request, form.get_user())
+        return redirect('painel_ti')
     
     return render(request, 'core/ti.html', {'form': form})
 
+
 @login_required(login_url='login_ti')
 def painel_ti_view(request):
-    """Gerencia o cadastro, listagem e salvamento dos equipamentos no SQLite."""
+    erro = None
     if request.method == 'POST':
-        tombo = request.POST.get('tombo')
-        nome_maquina = request.POST.get('nome_maquina')
-        ip_alocado = request.POST.get('ip_alocado')
-        setor = request.POST.get('setor')
-
-        if tombo and nome_maquina and ip_alocado and setor:
+        # Cria direto no banco; se faltar campo obrigatório ou der duplicidade, cai nas exceções
+        try:
+            
             Equipamento.objects.create(
-                tombo=tombo,
-                nome_maquina=nome_maquina,
-                ip_alocado=ip_alocado,
-                setor=setor
+                tombo=request.POST.get('tombo'),
+                nome_maquina=request.POST.get('nome_maquina'),
+                ip_alocado=request.POST.get('ip_alocado'),
+                setor=request.POST.get('setor')
             )
-        return redirect('painel_ti')
+            return redirect('painel_ti')
+        except IntegrityError:
+            erro = 'Este número de tombo já está em uso.'
 
-    # Busca todos os equipamentos cadastrados no SQLite
-    equipamentos = Equipamento.objects.all().order_by('-id')
-    
     context = {
-        'equipamentos': equipamentos,
+        'equipamentos': Equipamento.objects.all().order_by('-id'),
+        'erro': erro
     }
-    
     return render(request, 'core/painel.html', context)
+
 
 @login_required(login_url='login_ti')
 def editar_patrimonio(request, pk):
     equipamento = get_object_or_404(Equipamento, pk=pk)
+    erro = None
+
     if request.method == 'POST':
         equipamento.tombo = request.POST.get('tombo')
         equipamento.nome_maquina = request.POST.get('nome_maquina')
-        equipamento.ip_alocado = request.POST.get('ip_alocado')
-        equipamento.setor = request.POST.get('setor')
-        equipamento.save()
-        return redirect('painel_ti')
-    
-    return render(request, 'core/editar_patrimonio.html', {'equipamento': equipamento})
+
+        # Atualiza IP e setor apenas se vierem preenchidos no formulário
+        if ip := request.POST.get('ip_alocado'):
+            equipamento.ip_alocado = ip
+        if setor := request.POST.get('setor'):
+            equipamento.setor = setor
+
+        try:
+            equipamento.save()
+            return redirect('painel_ti')
+        except IntegrityError:
+            erro = 'Este número de tombo já está em uso.'
+
+    return render(request, 'core/editar_patrimonio.html', {
+        'equipamento': equipamento, 
+        'erro': erro
+    })
+
 
 @login_required(login_url='login_ti')
 def excluir_patrimonio(request, pk):
-    equipamento = get_object_or_404(Equipamento, pk=pk)
-    equipamento.delete()
+    get_object_or_404(Equipamento, pk=pk).delete()
     return redirect('painel_ti')

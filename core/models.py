@@ -13,3 +13,11 @@ class Equipamento(models.Model):
 
 
         
+class Ramal(models.Model):
+    numero = models.CharField(max_length=10, unique=True, verbose_name="Ramal")
+    colaborador = models.CharField(max_length=100, verbose_name="Colaborador")
+    setor = models.CharField(max_length=50, verbose_name="Setor")
+    observacao = models.CharField(max_length=100, blank=True, verbose_name="Observação")
+
+    def __str__(self):
+        return f"{self.numero} - {self.colaborador}"

@@ -2,8 +2,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import IntegrityError
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Equipamento
+from .models import Equipamento, Ramal
 
 
 def index_view(request):
@@ -11,13 +12,26 @@ def index_view(request):
 
 
 def consulta_ramais_view(request):
-    return render(request, 'core/ramais.html')
+    termo = request.GET.get('q', '').strip()
+    setor = request.GET.get('setor', '').strip()
+
+    ramais = Ramal.objects.all().order_by('numero')
+
+    if termo:
+        ramais = ramais.filter(
+            Q(colaborador__icontains=termo) |
+            Q(setor__icontains=termo) |
+            Q(numero__icontains=termo)
+        )
+    if setor:
+        ramais = ramais.filter(setor__iexact=setor)
+
+    return render(request, 'core/ramais.html', {'ramais': ramais})
 
 
 def autenticacao_ti(request):
     return render(request, 'core/ti.html')
 
-# Simplifica a validação do form usando 'data=request.POST or None'
 def login_view(request):
     form = AuthenticationForm(request, data=request.POST or None)
     if request.method == 'POST' and form.is_valid():

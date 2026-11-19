@@ -214,6 +214,12 @@
             font-weight: bold;
         }
 
+        .sem-resultado {
+            text-align: center;
+            color: #555;
+            padding: 24px;
+        }
+
         .nav-voltar {
             margin-bottom: 5px;
             align-self: flex-start;
@@ -283,6 +289,9 @@
 
             <!-- Área de Filtros e Busca -->
             <form method="GET" action="{% url 'ramais' %}">
+                <!-- Mantém o setor escolhido ao fazer uma nova busca -->
+                <input type="hidden" name="setor" value="{{ request.GET.setor }}">
+
                 <div class="filtros-container">
 
                     <div class="campo-busca">
@@ -299,28 +308,31 @@
 
                     <div class="filtros-setor">
                         <label>FILTRAR POR SETOR</label>
+                        <!-- Os links mantêm o texto buscado (q) ao trocar de setor -->
+                        {% with q=request.GET.q|urlencode %}
                         <div class="botoes-setor">
-                            <a href="{% url 'ramais' %}"><button type="button"
+                            <a href="?q={{ q }}"><button type="button"
                                     class="{% if not request.GET.setor %}btn-ativo{% endif %}">TODOS</button></a>
-                            <a href="?setor=PRODUCAO"><button type="button"
+                            <a href="?setor=PRODUCAO&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'PRODUCAO' %}btn-ativo{% endif %}">PRODUÇÃO</button></a>
-                            <a href="?setor=TI"><button type="button"
+                            <a href="?setor=TI&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'TI' %}btn-ativo{% endif %}">TI</button></a>
-                            <a href="?setor=LOGISTICA"><button type="button"
+                            <a href="?setor=LOGISTICA&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'LOGISTICA' %}btn-ativo{% endif %}">LOGÍSTICA</button></a>
-                            <a href="?setor=FINANCEIRO"><button type="button"
+                            <a href="?setor=FINANCEIRO&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'FINANCEIRO' %}btn-ativo{% endif %}">FINANCEIRO</button></a>
-                            <a href="?setor=SESMT"><button type="button"
+                            <a href="?setor=SESMT&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'SESMT' %}btn-ativo{% endif %}">SESMT</button></a>
-                            <a href="?setor=LABORATORIO"><button type="button"
+                            <a href="?setor=LABORATORIO&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'LABORATORIO' %}btn-ativo{% endif %}">LAB</button></a>
-                            <a href="?setor=FROTA"><button type="button"
+                            <a href="?setor=FROTA&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'FROTA' %}btn-ativo{% endif %}">FROTA</button></a>
-                            <a href="?setor=ALMOXARIFADO"><button type="button"
+                            <a href="?setor=ALMOXARIFADO&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'ALMOXARIFADO' %}btn-ativo{% endif %}">ALM</button></a>
-                            <a href="?setor=MANUTENCAO"><button type="button"
+                            <a href="?setor=MANUTENCAO&q={{ q }}"><button type="button"
                                     class="{% if request.GET.setor == 'MANUTENCAO' %}btn-ativo{% endif %}">MANUTENÇÃO</button></a>
                         </div>
+                        {% endwith %}
                     </div>
 
                 </div>
@@ -346,58 +358,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td><strong>2004</strong></td>
-                        <td>Pedro Silva</td>
-                        <td><span class="setor-tag">SESMT</span></td>
-                        <td>Seguranca do Trabalho</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2001</strong></td>
-                        <td>João Silva</td>
-                        <td><span class="setor-tag">Produção</span></td>
-                        <td>Linha 01</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2005</strong></td>
-                        <td>Maria Santos</td>
-                        <td><span class="setor-tag">TI</span></td>
-                        <td>Suporte Local</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2012</strong></td>
-                        <td>Carlos Eduardo</td>
-                        <td><span class="setor-tag">Logística</span></td>
-                        <td>Galpão B</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2022</strong></td>
-                        <td>Ana Silva</td>
-                        <td><span class="setor-tag">LaBoratorio</span></td>
-                        <td>Galpão A</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2024</strong></td>
-                        <td>Joao Maria</td>
-                        <td><span class="setor-tag">Frota</span></td>
-                        <td>LABORATORIO</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2026</strong></td>
-                        <td>Rafael Santos</td>
-                        <td><span class="setor-tag">Almoxarifado</span></td>
-                        <td>ALMOXARIFADO</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2028</strong></td>
-                        <td>Carlos Eduardo</td>
-                        <td><span class="setor-tag">Manutencao</span></td>
-                        <td>MANUTENCAO</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2030</strong></td>
-                        <td>Maria Madalena</td>
-                        <td><span class="setor-tag">Estoque</span></td>
-                        <td>ESTOQUE</td>
+                        <td colspan="4" class="sem-resultado">Nenhum ramal encontrado.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

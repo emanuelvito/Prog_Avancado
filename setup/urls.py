@@ -10,8 +10,6 @@ urlpatterns = [
     path('ramais/', views.consulta_ramais_view, name='ramais'),  
     path('ti/', views.login_view, name='login_ti'),  # Apontando para a view de login/autenticação
     path('painel/', views.painel_ti_view, name='painel_ti'),
-
-
     path('painel/editar/<int:pk>/', views.editar_patrimonio, name='editar_patrimonio'),
     path('painel/excluir/<int:pk>/', views.excluir_patrimonio, name='excluir_patrimonio'),
 ]

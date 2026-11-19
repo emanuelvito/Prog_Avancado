@@ -10,7 +10,8 @@ RAMAIS = [
     ("2026", "Rafael Santos", "ALMOXARIFADO", "ALMOXARIFADO"),
     ("2028", "Carlos Eduardo", "MANUTENCAO", "MANUTENCAO"),
     ("2030", "Maria Madalena", "PRODUCAO", "PRODUCAO"),
-    ("2031", "Thiago Silva", "MANUTENCAO", "MANUTENCAO") 
+    ("2031", "Thiago Silva", "MANUTENCAO", "MANUTENCAO")
+    ("2032", "Erick Santos", "FROTA", "FROTA") 
 ]
 for numero, colaborador, setor, observacao in RAMAIS:
     ramal, criado = Ramal.objects.update_or_create(
